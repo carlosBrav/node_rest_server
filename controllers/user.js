@@ -4,8 +4,7 @@ const bcrypt = require("bcryptjs");
 
 const getUser = async (req = request, res = response) => {
   const { limite = 5, desde = 0 } = req.query;
-  const query = {  estado: true  };;
-  console.log("GET USER ")
+  const query = { estado: true };
   // const usuarios = await Usuario.find(query)
   //   .skip(Number(desde))
   //   .limit(Number(limite));
