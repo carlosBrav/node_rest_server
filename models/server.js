@@ -1,28 +1,35 @@
 const express = require('express');
 const cors = require('cors')
+const { dbConnection } = require("../database/config");
+const bodyParser = require("body-parser");
 
 class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
-    this.routes();
     this.midlewares();
+    this.routes();
+    this.connectDB();
   }
 
-  midlewares(){
+  midlewares() {
     //lectura y parseo del body
-    this.app.use(express.json())
+    this.app.use(bodyParser.json());
     this.app.use(cors());
   }
 
-  routes(){
-    this.app.use('/api/user',require('../routes/user'))
+  async connectDB() {
+    await dbConnection();
   }
 
-  listener(){
-    this.app.listen(this.port,()=>{
-      console.log("Servidor corriendo en puerto ", this.port)
-    })
+  routes() {
+    this.app.use("/api/user", require("../routes/user"));
+  }
+
+  listener() {
+    this.app.listen(this.port, () => {
+      console.log("Servidor corriendo en puerto ", this.port);
+    });
   }
 }
 
